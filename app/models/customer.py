@@ -18,8 +18,8 @@ class Customer(db.Model):
             "name": self.name,
             "registered_at": self.registered_at,
             "postal_code": self.postal_code,
-            "phone": self.phone
-            #"videos_checked_out_count": self.videos_checked_out_count
+            "phone": self.phone,
+            "videos_checked_out_count": 0
         }
     
     def from_json(request_dict):
