@@ -58,6 +58,14 @@ def update_customer(customer_id):
     return make_response(customer.make_json(), 200)
 
 @customer_bp.route("/<customer_id>", methods=["DELETE"], strict_slashes=False)
-def delete_customer():
-    pass
+def delete_customer(customer_id):
+    customer = Customer.query.get(customer_id)
+
+    if customer is None:
+        return make_response("", 404) 
+
+    db.session.delete(customer)
+    db.session.commit()
+
+    return make_response({"id": f"{customer.id}"}, 200)   
 
