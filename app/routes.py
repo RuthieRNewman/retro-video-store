@@ -8,6 +8,7 @@ from datetime import datetime
 
 
 customer_bp = Blueprint("customers", __name__, url_prefix="/customers")
+video_bp = Blueprint("videos", __name__, url_prefix="/videos")
 
 @customer_bp.route("", methods=["POST"], strict_slashes=False)
 def create_new_customer():
@@ -16,7 +17,6 @@ def create_new_customer():
         return make_response({"details": "Invalid Data"}, 400)
     
     new_customer = Customer.from_json(request_body)
-    print(new_customer)
 
     db.session.add(new_customer)
     db.session.commit()
@@ -28,7 +28,6 @@ def get_all_customers():
     customers = Customer.query.all()
 
     customers_response = [customer.make_json() for customer in customers]
-
 
     return make_response(jsonify(customers_response),200)
 
@@ -68,4 +67,31 @@ def delete_customer(customer_id):
     db.session.commit()
 
     return make_response({"id": f"{customer.id}"}, 200)   
+
+
+#video routes
+
+@video_bp.route("", methods=["POST"], strict_slashes=False)
+def create_new_customer():
+    request_data = request.get_json()
+
+    if not request_data:
+        return make_response({"details": "Invalid Data"}, 400)
+    
+    new_video = Video.from_json(request_data)
+
+    db.session.add(new_video)
+    db.session.commit()
+
+    return make_response(new_video.make_json(), 201)
+
+    
+
+@video_bp.route("", methods=["GET"], strict_slashes=False)
+def get_all_videos():
+    videos = Video.query.all()
+
+    video_response = [video.make_json() for video in videos]
+
+    return make_response(jsonify(video_response),200)
 
