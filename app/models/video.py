@@ -7,7 +7,7 @@ class Video(db.Model):
     __tablename__ = 'videos'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50))
-    release_date = db.Column(db.String(50))
+    release_date = db.Column(db.DateTime)
     total_inventory = db.Column(db.Integer)
     #video = db.relationship('Rental', backref="rentals", lazy=True)
 
