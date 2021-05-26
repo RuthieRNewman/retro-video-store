@@ -10,7 +10,7 @@ class Customer(db.Model):
     postal_code = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(50), nullable=False)
     registered_at = db.Column(db.DateTime, nullable=False)
-    #customer = relationship("Rental", backref="customers", lazy=True)
+    rentals = db.relationship("Rental", backref="customers", lazy=True)
 
     def make_json(self):
         return {
@@ -30,3 +30,19 @@ class Customer(db.Model):
             phone = request_dict["phone"]
         )
         return new_customer
+
+    def rental_response(customer_id):
+
+        customer = Customer.query.get(customer_id)
+        rented_videos =customer.rentals
+        rentals_response = []
+
+        for video in rented_videos:
+            video_data = {}
+            video_data['title'] = video.title
+            video_data['release_date'] = video.release_date
+            video_data['due_date'] = video.due_date
+
+            rentals_response.append(video_data)
+        
+        return rentals_response
