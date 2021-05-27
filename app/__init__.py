@@ -22,6 +22,9 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    from .routes import index_bp
+    app.register_blueprint(index_bp)
+
     from .routes import customer_bp
     app.register_blueprint(customer_bp)
 
