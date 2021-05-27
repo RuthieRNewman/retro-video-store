@@ -7,7 +7,7 @@ import os
 import requests
 from datetime import datetime, timedelta
 
-index_bp = Blueprint("index", __name__, url_prefix="") #home route
+index_bp = Blueprint("index", __name__, url_prefix="/") #home route
 customer_bp = Blueprint("customers", __name__, url_prefix="/customers")
 video_bp = Blueprint("videos", __name__, url_prefix="/videos")
 rental_bp = Blueprint("rentals", __name__, url_prefix="/rentals")
